@@ -1,0 +1,20 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const authRoute = require("./routes/auth.route.js")
+const expenseRoute = require("./routes/expense.route.js");
+require("dotenv").config();
+
+const app = express();
+app.use(express.json());
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("Database Connected Successfully"))
+  .catch((err) => console.log(err));
+
+
+
+  
+app.use("/auth",authRoute);
+app.use("/expense",expenseRoute);
+app.listen(process.env.PORT);
