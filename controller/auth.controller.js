@@ -4,23 +4,25 @@ const User = require("../models/user.js")
 require("dotenv").config();
 
 const register = async (req,res)=>{
-    const {username , password} = req.body;
-    const hashedpassword = await bcrypt.hash(password,10);
-    if(!password){
-        return res.status(400).json({error : "Required Password"});
-    }
+    
     try{
+        const {username , password} = req.body;
+        const hashedpassword = await bcrypt.hash(password,10);
+        
         const newUser = await User.create({
         username,
         password: hashedpassword
     });
+
+    res.status(201).json({'User' : username , message: "User added Successfully "});
+
     }
     catch(err){
         res.status(400).json({error : err.message});
     }
     
     
-    res.status(201).json({'User' : username , message: "User added Successfully "});
+
     
 };
 
