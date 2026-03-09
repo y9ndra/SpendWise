@@ -1,17 +1,16 @@
 const jwt = require ("jsonwebtoken");
-const SECRET_KEY = "expense_tracker_secret";
 
 const authMiddleware = (req,res,next)=>{
-    const token = req.header.authorization;
-
+    const token = req.headers.authorization.split(" ")[1];
+    console.log(process.env.SECRET_KEY)
+    console.log(token)
     if(!token){
         return res.status(401).json({
             error : "Access Denied. Token not Generated"
         });
     }
-
     try{
-        const verified = jwt.verify(token, SECRET_KEY);
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
 
         req.user = verified;
 
@@ -19,9 +18,9 @@ const authMiddleware = (req,res,next)=>{
     }
     catch(err){
         return res.status(401).json({
-            error:"Access Denied. Login Again"
+            error:err.message
         });
     }
 };
 
-module.export = authMiddleware;
+module.exports = authMiddleware;
