@@ -7,8 +7,16 @@ const register = async (req,res)=>{
     
     try{
         const {username , password} = req.body;
+
+        if(!username || !password){
+            return res.status(400).json({message : "Username and Password are Required"});
+        }
+        if(password.lenght < 8){
+            return res.status(400).json({message : "Password must be atleast 8 characters"});
+        }
+
         const hashedpassword = await bcrypt.hash(password,10);
-        
+
         const newUser = await User.create({
         username,
         password: hashedpassword
@@ -40,13 +48,13 @@ const login = async (req,res)=>{
         return res.status(404).json({error:"Password Incorrect"});
     }
     
-    const token = jwt.sign({userId:user._id,username : user.username},SECRET_KEY, {expiresIn: "1m"} );
+    const token = jwt.sign({userId:user._id,username : user.username},process.env.SECRET_KEY, {expiresIn: "15m"} );
 
     res.status(200).json({
         message:"Login Successful",
         token : token
     });
-
+    
 };
 
 
