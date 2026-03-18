@@ -48,7 +48,7 @@ const login = async (req,res)=>{
         return res.status(404).json({error:"Password Incorrect"});
     }
     
-    const token = jwt.sign({userId:user._id,username : user.username},process.env.SECRET_KEY, {expiresIn: "15m"} );
+    const token = jwt.sign({userId:user._id,username : user.username},process.env.SECRET_KEY, {expiresIn: "3h"} );
 
     res.status(200).json({
         message:"Login Successful",
