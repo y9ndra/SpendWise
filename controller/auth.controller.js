@@ -11,8 +11,13 @@ const register = async (req,res)=>{
         if(!username || !password){
             return res.status(400).json({message : "Username and Password are Required"});
         }
-        if(password.lenght < 8){
+        if(password.length < 8){
             return res.status(400).json({message : "Password must be atleast 8 characters"});
+        }
+        const existinguser = await User.findOne({username});
+
+        if(existinguser){
+            return res.status(400).json({message : "Username already exists"});
         }
 
         const hashedpassword = await bcrypt.hash(password,10);
