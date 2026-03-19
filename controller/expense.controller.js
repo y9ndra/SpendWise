@@ -33,7 +33,7 @@ const viewExpense = async (req,res)=>{
 
         const expenses = await Expense.find(filter)
         .sort({createdAt:-1})
-        .skip(page)
+        .skip(skip)
         .limit(limit);
 
         const total = await Expense.countDocuments(filter);
