@@ -27,15 +27,12 @@ const register = async (req,res)=>{
         password: hashedpassword
     });
 
-    res.status(201).json({'User' : username , message: "User added Successfully "});
+    res.status(201).json({user : {id : newUser._id, username:newUser.username }, message: "User added Successfully "});
 
     }
     catch(err){
         res.status(400).json({error : err.message});
     }
-    
-    
-
     
 };
 
