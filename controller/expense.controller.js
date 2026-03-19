@@ -96,5 +96,4 @@ catch(err){
 };
 
 
-
 module.exports = {addExpense,viewExpense,deleteExpense,category};
