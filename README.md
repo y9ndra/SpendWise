@@ -1,200 +1,318 @@
-# 💰 Expense Tracker API
+# 💰 SpendWise API
 
-A secure and scalable backend API for managing personal expenses, built using Node.js, Express, MongoDB, and JWT authentication.
+<p align="center">
+  <img src="assets/banner.png" alt="SpendWise Banner" width="800"/>
+</p>
+
+A secure and scalable RESTful Expense Tracker API built with **Node.js**, **Express.js**, and **MongoDB**. It enables users to register, authenticate using JWT, and manage their personal expenses through protected API endpoints.
+
+The project follows the **MVC architecture**, implements secure authentication using **bcrypt** and **JWT**, and is fully containerized using **Docker** for consistent development and deployment.
 
 ---
 
-## 🚀 Live Demo
+## 🚀 Features
 
-🔗 **Deployed API:**
-https://spendwise-nlql.onrender.com
-
----
-
-## 🧠 Features
-
-- 🔐 User Authentication (Register & Login)
-- 🔑 JWT-based Authorization
+- 🔐 User Registration & Login
+- 🔑 JWT Authentication
 - 🔒 Password Hashing using bcrypt
-- 📊 Expense Management (CRUD)
-- 📂 Category-based Filtering
-- 📄 Pagination Support
-- 📈 Expense Summary (Total, Category, Monthly)
-- 🧩 Clean MVC Architecture
+- 📊 Expense CRUD Operations
+- 📄 Pagination
+- 🔍 Filtering Expenses
+- 🛡 Protected Routes
+- 🏗 MVC Project Structure
+- 🐳 Docker & Docker Compose Support
+- 🌐 Ready for Deployment (Render)
 
 ---
 
-## 🛠 Tech Stack
-
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB (Mongoose)
-- **Authentication:** JWT (JSON Web Tokens)
-- **Security:** bcrypt
-- **Deployment:** Render
-
----
-
-## 📁 Project Structure
+# 🏗 System Architecture
 
 ```
-project
+                    Client
+                       │
+                 HTTP Request
+                       │
+               Express Server
+                       │
+               JWT Authentication
+                       │
+                Route Handlers
+                       │
+                 Controllers
+                       │
+                    Models
+                       │
+                   MongoDB
+```
+
+---
+
+# 🛠 Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Backend | Node.js |
+| Framework | Express.js |
+| Database | MongoDB |
+| ODM | Mongoose |
+| Authentication | JWT |
+| Password Security | bcrypt |
+| Containerization | Docker |
+| API Testing | Postman |
+| Deployment | Render |
+
+---
+
+# 📂 Project Structure
+
+```
+SpendWise/
 │
-├── controllers
-│     auth.controller.js
-│     expense.controller.js
+├── config/
 │
-├── models
-│     User.js
-│     Expense.js
+├── controllers/
+│   ├── auth.controller.js
+│   └── expense.controller.js
 │
-├── routes
-│     auth.route.js
-│     expense.route.js
+├── middleware/
+│   └── auth.middleware.js
 │
-├── middleware
-│     auth.middleware.js
+├── models/
+│   ├── User.js
+│   └── Expense.js
 │
+├── routes/
+│   ├── auth.route.js
+│   └── expense.route.js
+│
+├── assets/
+│   ├── banner.png
+│   ├── register.png
+│   ├── login.png
+│   ├── expenses.png
+│   └── docker.png
+│
+├── Dockerfile
+├── docker-compose.yml
+├── package.json
 ├── server.js
-└── .env
+└── .env.example
 ```
 
 ---
 
-## 🔐 Authentication Flow
+# 📸 Project Preview
 
-1. User registers → password hashed and stored
-2. User logs in → JWT token generated
-3. Client sends token in headers
-4. Middleware verifies token for protected routes
+## User Registration
 
----
-
-## 📌 API Endpoints
-
-### 🔑 Auth Routes
-
-#### Register
-
-```
-POST /auth/register
-```
-
-#### Login
-
-```
-POST /auth/login
-```
+<p align="center">
+<img src="assets/register.png" width="800">
+</p>
 
 ---
 
-### 💸 Expense Routes (Protected)
+## User Login
 
-> ⚠️ Requires Authorization Header:
-
-```
-Authorization: <your_token>
-```
+<p align="center">
+<img src="assets/login.png" width="800">
+</p>
 
 ---
 
-#### ➕ Add Expense
+## Expense Management
 
-```
-POST /expenses/add
-```
-
----
-
-#### 📄 Get All Expenses (with pagination & filter)
-
-```
-GET /expenses?page=1&limit=10&category=Food
-```
+<p align="center">
+<img src="assets/expenses.png" width="800">
+</p>
 
 ---
 
-#### ❌ Delete Expense
+## Docker Container
 
-```
-DELETE /expenses/:id
-```
-
----
-
-## 📊 Query Parameters
-
-| Parameter | Description                |
-| --------- | -------------------------- |
-| page      | Page number                |
-| limit     | Number of records per page |
-| category  | Filter by category         |
+<p align="center">
+<img src="assets/docker.png" width="800">
+</p>
 
 ---
 
-## 🔐 Security Features
+# 📡 API Endpoints
 
-- Passwords hashed using bcrypt
-- JWT authentication with expiration
-- Protected routes using middleware
-- User-specific data access
+## Authentication
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/auth/register` | Register a new user |
+| POST | `/auth/login` | Login user |
 
 ---
 
-## 🧪 Example Request
+## Expenses
 
-### Get Expenses
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/expenses` | Get all expenses |
+| POST | `/expenses` | Add expense |
+| DELETE | `/expenses/:id` | Delete expense |
+
+---
+
+## Protected Routes
+
+All expense routes require a JWT.
+
+Add the token in the request header:
 
 ```
-GET /expenses?page=1&limit=5&category=Food
+Authorization: Bearer <your_jwt_token>
 ```
 
 ---
 
-### Response
+# ⚙ Environment Variables
 
-```json
-{
-  "totalRecords": 20,
-  "currentPage": 1,
-  "totalPages": 4,
-  "expenses": [...]
-}
-```
-
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file:
+Create a `.env` file.
 
 ```
 PORT=3000
-MONGO_URL=your_mongodb_connection
-SECRET_KEY=your_secret_key
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret_key
 ```
 
 ---
 
-## 🧑‍💻 How to Run Locally
+# 🐳 Run Using Docker
+
+Clone the repository
 
 ```bash
-git clone https://github.com/YUGI-18/SpendWise.git
+git clone https://github.com/yourusername/SpendWise.git
+```
+
+Move into the project
+
+```bash
 cd SpendWise
+```
+
+Build and start the containers
+
+```bash
+docker compose up --build
+```
+
+The API will be available at
+
+```
+http://localhost:3000
+```
+
+To stop the containers
+
+```bash
+docker compose down
+```
+
+---
+
+# 💻 Run Locally (Without Docker)
+
+Clone the repository
+
+```bash
+git clone https://github.com/yourusername/SpendWise.git
+```
+
+Navigate to the project
+
+```bash
+cd SpendWise
+```
+
+Install dependencies
+
+```bash
 npm install
+```
+
+Create a `.env` file.
+
+Start the server
+
+```bash
 npm start
 ```
 
----
+or
 
-## 📈 Future Improvements
-
-- Update Expense (PUT)
-- Advanced Filtering (date range, amount)
-- Charts & Analytics Dashboard
-- Frontend Integration (React)
+```bash
+node server.js
+```
 
 ---
 
-## ⭐ If you like this project
+# 🧪 Testing the API
 
-If you found this useful, consider giving it a star ⭐!
+You can test the API using:
+
+- Postman
+- Thunder Client
+- Insomnia
+
+Workflow:
+
+1. Register a user
+2. Login
+3. Copy the JWT
+4. Add it to
+
+```
+Authorization: Bearer <token>
+```
+
+5. Access protected endpoints.
+
+---
+
+# 🔒 Security Features
+
+- Passwords hashed using bcrypt
+- JWT-based authentication
+- Protected routes
+- Environment variables
+- User-specific expense access
+- Invalid token handling
+
+---
+
+# 📚 Concepts Demonstrated
+
+- REST API Development
+- MVC Architecture
+- Express Middleware
+- JWT Authentication
+- Password Hashing
+- MongoDB Relationships
+- Pagination
+- Filtering
+- Error Handling
+- Docker Containerization
+- Environment Variable Management
+
+---
+
+# 🚀 Future Improvements
+
+- ✏ Update Expense Endpoint
+- 📅 Filter by Date Range
+- 📈 Expense Analytics Dashboard
+- 📊 Charts & Reports
+- 📄 Swagger API Documentation
+- 🧪 Unit & Integration Tests
+- ⚙ GitHub Actions CI/CD
+- ⚛ React Frontend
+
+---
+
+## ⭐ If you found this project helpful, consider giving it a star!
