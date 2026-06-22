@@ -1,7 +1,7 @@
 # 💰 SpendWise API
 
 <p align="center">
-  <img src="assets/banner.png" alt="SpendWise Banner" width="800"/>
+  <img src="assets/banner.jpg" alt="SpendWise Banner" width="800"/>
 </p>
 
 A secure and scalable RESTful Expense Tracker API built with **Node.js**, **Express.js**, and **MongoDB**. It enables users to register, authenticate using JWT, and manage their personal expenses through protected API endpoints.
