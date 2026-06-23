@@ -150,9 +150,9 @@ SpendWise/
 
 | Method | Endpoint | Description |
 |---------|----------|-------------|
-| GET | `/expenses` | Get all expenses |
-| POST | `/expenses` | Add expense |
-| DELETE | `/expenses/:id` | Delete expense |
+| GET | `/expense/get` | Get all expenses |
+| POST | `/expense/add` | Add expense |
+| DELETE | `/expense/del/:id` | Delete expense |
 
 ---
 
